@@ -111,13 +111,12 @@ function draw() {
     }
     child[k].update();
     var m2 = minute();
-
     if (blob.eats(child[k])) {
       if ((m2 - this.m) > 2) {
-        this.r = other.r + this.r;
+        //this.r = other.r + this.r;
         //blob.merge(child[k]);
         score += 1
-        child.splice(child[k], 0);
+        child.splice(child[k], 1);
         //console.log()
       }
     }

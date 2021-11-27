@@ -48,12 +48,14 @@ function Blob(x, y, r, c, v) {
   };
   //CHECKING if user blob eats small blobs
   this.eats = function(other) {
-
-    var d = p5.Vector.dist(this.pos, other.pos);
-    if (d < this.r + other.r) {
-      var sum = PI * this.r * this.r + PI * other.r * other.r;
-      this.r = sqrt(sum / PI);
-      return true;
+    var m2 = minute();
+    if (other == blobs || (m2- this.m) > 1) {
+      var d = p5.Vector.dist(this.pos, other.pos);
+      if (d < this.r + other.r) {
+        var sum = PI * this.r * this.r + PI * other.r * other.r;
+        this.r = sqrt(sum / PI);
+        return true;
+      }
     } else {
       return false;
     }

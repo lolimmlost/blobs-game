@@ -13,6 +13,7 @@ let mapSize = [3920, 3080];
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
+
 function keyPressed() {
   console.log(child.length);
   if (keyCode === 32) {
@@ -22,6 +23,7 @@ function keyPressed() {
     return false; // prevent any default behaviour;
   }
 }
+
 function setup() {
   createCanvas(windowWidth, windowHeight - 10);
 
@@ -95,20 +97,34 @@ function draw() {
   // DRAWING CHILDREN of BLOB
   for (var k = child.length - 1; k >= 0; k--) {
     child[k].show();
-for (var j = blobs.length - 1; j >= 0; j--) {
-    //EATS FUNCTION
-    if (child[k].eats(blobs[j])) {
-      //Adding to score
-      score += 1;
-      // Adding more blobs after they have been eaten
-      blobs.splice(j, 1);
-      var x2 = random(-mapSize[0], mapSize[0]);
-      var y2 = random(-mapSize[1], mapSize[1]);
-      blobs.push(new Blob(x2, y2, miniBlob, 0));
-    }}
+    for (var j = blobs.length - 1; j >= 0; j--) {
+      //EATS FUNCTION
+      if (child[k].eats(blobs[j])) {
+        //Adding to score
+        score += 1;
+        // Adding more blobs after they have been eaten
+        blobs.splice(j, 1);
+        var x2 = random(-mapSize[0], mapSize[0]);
+        var y2 = random(-mapSize[1], mapSize[1]);
+        blobs.push(new Blob(x2, y2, miniBlob, 0));
+      }
+    }
     child[k].update();
+    var m2 = minute();
+
+    if (blob.eats(child[k])) {
+      if ((m2 - this.m) > 2) {
+        this.r = other.r + this.r;
+        //blob.merge(child[k]);
+        score += 1
+        child.splice(child[k], 0);
+        //console.log()
+      }
+    }
+
     //console.log(child[child.length-1])
   }
+
   blob.show();
 
   blob.update();

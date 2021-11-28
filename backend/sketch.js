@@ -7,6 +7,7 @@ var mainBlob = 32;
 var miniBlob = 16;
 let photo, maskImage;
 let mapSize = [3920, 3080];
+let timeKeeper = 0;
 // function preload() {
 //   photo = loadImage("https://picsum.photos/300/200");
 // }
@@ -18,7 +19,7 @@ function keyPressed() {
   console.log(child.length);
   if (keyCode === 32) {
     blob.half();
-    child.half();
+    //child.half();
   } else {
     return false; // prevent any default behaviour;
   }
@@ -30,7 +31,7 @@ function setup() {
 
   blob = new Blob(0, 0, mainBlob, 255, 0);
 
-  for (var i = 0; i < mapSize[1] / 4; i++) {
+  for (var i = 0; i < mapSize[1] / 3; i++) {
     var x = random(-mapSize[0], mapSize[0]);
     var y = random(-mapSize[1], mapSize[1]);
     blobs[i] = new Blob(x, y, miniBlob, 0);
@@ -111,13 +112,14 @@ function draw() {
     }
     child[k].show();
     child[k].update();
-    var m2 = minute();
+    console.log(child[k].t);
     if (blob.eats(child[k])) {
-      if ((m2 - this.m) > 2) {
+      var newTime = minute();
+      if ((newTime - child[k].t) > .5) {
         //this.r = other.r + this.r;
         //blob.merge(child[k]);
-        score += 1
-        child.splice(child[k], 1);
+        score += 1;
+        child.splice(k, 1);
         //console.log()
       }
     }

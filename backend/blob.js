@@ -4,6 +4,7 @@ function Blob(x, y, r, c, v) {
   this.x = x;
   this.x = y;
 
+  this.t = 0;
   //SET position of blob
   this.pos = createVector(x, y);
   //SET radius of blob
@@ -74,7 +75,7 @@ function Blob(x, y, r, c, v) {
     ellipse(this.pos.x, this.pos.y, this.r * 2, this.r * 2);
     return false;
   };
-  this.m = 0;
+  //this.m = 0;
 
   //SPLIT Blob / ATTACK
 
@@ -87,6 +88,7 @@ function Blob(x, y, r, c, v) {
       var childTemp = new Blob(tempX, tempY, this.r, 0, 4);
       child.push(childTemp);
       //console.log(child);
+      this.t = minute();
     } else return false;
   };
 }

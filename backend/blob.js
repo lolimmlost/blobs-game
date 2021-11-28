@@ -38,18 +38,26 @@ function Blob(x, y, r, c, v) {
     else if (this.pos.y - this.r < -mapSize[1]) this.pos.add(0, 1);
     else if (this.pos.y + this.r > mapSize[1]) this.pos.add(0, -1);
     else {
-      //Direction of Blob plug children
+      //Direction of Blob plus children
       var newvel = createVector(mouseX - width / 2, mouseY - height / 2);
-      if (this.v == 4) newvel.setMag(7);
-      else newvel.setMag(6);
-      this.vel.lerp(newvel, 0.8);
+      //if (this.v == 4) newvel.setMag(7);
+      //newvel.setMag(floor((PI * this.r) *2 / this.r));
+      //newvel.setMag(floor((PI * this.r * 2) / this.r));
+      //newvel.setMag(floor(1/this.r)+PI*2);
+      newvel.setMag(floor(100 / sqrt(this.r)));
+      this.vel.lerp(newvel, 0.6);
       this.pos.add(this.vel);
     }
   };
   //CHECKING if user blob eats small blobs
+<<<<<<< HEAD
   this.eats = function(other) {
     //SET timer for blob addition
     var m2 = minute();
+=======
+  this.eats = function (other) {
+    if (other == child) {}
+>>>>>>> 41d84f8c5193940428e03eed6e61ba3914ea0a67
     var d = p5.Vector.dist(this.pos, other.pos);
     if (d < this.r + other.r) {
       var sum = PI * this.r * this.r + PI * other.r * other.r;
@@ -75,6 +83,7 @@ function Blob(x, y, r, c, v) {
   this.m = 0;
 
   //SPLIT Blob / ATTACK
+<<<<<<< HEAD
   this.half = function() {
     if (score > 20) {
       this.m = minute();
@@ -83,6 +92,14 @@ function Blob(x, y, r, c, v) {
       score = score / 2;
       var tempX = this.pos.x + this.r * 2;
       var tempY = this.pos.y + this.r * 2;
+=======
+  this.half = function () {
+    if (score > 10) {
+      this.r = floor(sqrt((PI * this.r * this.r) / 2) / 2);
+      score = floor(score / 2);
+      var tempX = this.pos.x + this.r;
+      var tempY = this.pos.y + this.r;
+>>>>>>> 41d84f8c5193940428e03eed6e61ba3914ea0a67
       var childTemp = new Blob(tempX, tempY, this.r, 0, 4);
       child.push(childTemp);
       //console.log(child);

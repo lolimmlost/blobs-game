@@ -25,6 +25,7 @@ function keyPressed() {
 }
 
 function setup() {
+  //frameRate(29);
   createCanvas(windowWidth, windowHeight - 10);
 
   blob = new Blob(0, 0, mainBlob, 255, 0);
@@ -96,7 +97,6 @@ function draw() {
   }
   // DRAWING CHILDREN of BLOB
   for (var k = child.length - 1; k >= 0; k--) {
-    child[k].show();
     for (var j = blobs.length - 1; j >= 0; j--) {
       //EATS FUNCTION
       if (child[k].eats(blobs[j])) {
@@ -109,6 +109,22 @@ function draw() {
         blobs.push(new Blob(x2, y2, miniBlob, 0));
       }
     }
+    child[k].show();
+<<<<<<< HEAD
+    for (var j = blobs.length - 1; j >= 0; j--) {
+      //EATS FUNCTION
+      if (child[k].eats(blobs[j])) {
+        //Adding to score
+        score += 1;
+        // Adding more blobs after they have been eaten
+        blobs.splice(j, 1);
+        var x2 = random(-mapSize[0], mapSize[0]);
+        var y2 = random(-mapSize[1], mapSize[1]);
+        blobs.push(new Blob(x2, y2, miniBlob, 0));
+      }
+    }
+=======
+>>>>>>> 41d84f8c5193940428e03eed6e61ba3914ea0a67
     child[k].update();
     var m2 = minute();
     if (blob.eats(child[k])) {

@@ -112,16 +112,11 @@ function draw() {
     }
     child[k].show();
     child[k].update();
-    console.log(child[k].t);
-    if (blob.eats(child[k])) {
-      var newTime = minute();
-      if ((newTime - child[k].t) > .5) {
-        //this.r = other.r + this.r;
-        //blob.merge(child[k]);
-        score += 1;
-        child.splice(k, 1);
-        //console.log()
-      }
+    // CHECKING if Main BLob Eats Child
+    if (blob.mergeWith(child[k])) {
+
+      score += 1;
+      child.splice(k, 1);
     }
 
     //console.log(child[child.length-1])

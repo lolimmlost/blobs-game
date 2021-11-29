@@ -42,7 +42,7 @@ function Blob(x, y, r, c, v) {
       //Direction of Blob plus children
       var newvel = createVector(mouseX - width / 2, mouseY - height / 2);
       //if (this.v == 4) newvel.setMag(7);
-      newvel.setMag(floor((PI * this.r) *2 / this.r));
+      newvel.setMag(floor((PI * this.r) * 2 / this.r));
       //newvel.setMag(floor((PI * this.r * 2) / this.r));
       //newvel.setMag(floor(1/this.r)+PI*2);
       //newvel.setMag(floor(100 / sqrt(this.r)));
@@ -52,19 +52,25 @@ function Blob(x, y, r, c, v) {
   };
   //CHECKING if user blob eats small blobs
   this.eats = function(other) {
-    if (other == child) {}
     var d = p5.Vector.dist(this.pos, other.pos);
     if (d < this.r + other.r) {
       var sum = PI * this.r * this.r + PI * other.r * other.r;
-      this.r = sqrt(sum / PI);
+      this.r = floor(sqrt(sum / PI));
       return true;
     } else return false;
   };
   // CHECKING if user eats child after x time
-  this.merge = function(other) {
-    //var mergeR = other.r;
+  this.mergeWith = function(other) {
+    var newTime = minute();
+    if ((newTime-this.t)>1){
+    var distanceFrom = p5.Vector.dist(this.pos, other.pos);
+    if (distanceFrom < this.r + other.r) {
+      var sum = PI * this.r * this.r + PI * other.r * other.r;
+      this.r = floor(sqrt(sum / PI));
+      return true;
 
-
+}
+}
   };
 
   //DISPLAY blobs
@@ -73,6 +79,7 @@ function Blob(x, y, r, c, v) {
     if (this.c == 255) fill(this.c);
     strokeWeight(2.5);
     ellipse(this.pos.x, this.pos.y, this.r * 2, this.r * 2);
+    //console.log(this.r);
     return false;
   };
   //this.m = 0;
@@ -81,13 +88,13 @@ function Blob(x, y, r, c, v) {
 
   this.half = function() {
     if (score > 10) {
-      this.r = floor(sqrt((PI * this.r * this.r) / 2) / 2);
+      this.r = sqrt((PI * this.r * this.r) / 2) / 2;
       score = floor(score / 2);
       var tempX = this.pos.x + this.r;
       var tempY = this.pos.y + this.r;
       var childTemp = new Blob(tempX, tempY, this.r, 0, 4);
       child.push(childTemp);
-      //console.log(child);
+      console.log(this.t);
       this.t = minute();
     } else return false;
   };

@@ -32,6 +32,7 @@ function Blob(x, y, r, c, v) {
   var randCol = random(colors.length);
   randCol = floor(randCol);
 
+  
   // UPDATING POSITION OF BLOB Against Boundries
   this.update = function() {
     if (this.pos.x - this.r < -mapSize[0]) this.pos.add(1, 0);
@@ -40,13 +41,11 @@ function Blob(x, y, r, c, v) {
     else if (this.pos.y + this.r > mapSize[1]) this.pos.add(0, -1);
     else {
       //Direction of Blob plus children
-      var newvel = createVector(mouseX - width / 2, mouseY - height / 2);
-      //if (this.v == 4) newvel.setMag(7);
-      newvel.setMag(floor((PI * this.r) * 2 / this.r));
-      //newvel.setMag(floor((PI * this.r * 2) / this.r));
-      //newvel.setMag(floor(1/this.r)+PI*2);
-      //newvel.setMag(floor(100 / sqrt(this.r)));
-      this.vel.lerp(newvel, 0.6);
+      var newvel = createVector(mouseX - width  / 2 , mouseY - height/ 2 );
+      newvel.setMag(6);
+      this.vel.lerp(newvel, 0.5);
+      console.log(this.pos);
+      //NEED to rewrite this move function to use v variable to set speed.
       this.pos.add(this.vel);
     }
   };
@@ -92,7 +91,7 @@ function Blob(x, y, r, c, v) {
       score = floor(score / 2);
       var tempX = this.pos.x + this.r;
       var tempY = this.pos.y + this.r;
-      var childTemp = new Blob(tempX, tempY, this.r, 0, 4);
+      var childTemp = new Blob(tempX, tempY, this.r, 0, 1);
       child.push(childTemp);
       console.log(this.t);
       this.t = minute();

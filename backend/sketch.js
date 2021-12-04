@@ -29,7 +29,7 @@ function setup() {
   //frameRate(29);
   createCanvas(windowWidth, windowHeight - 10);
 
-  blob = new Blob(0, 0, mainBlob, 255, 0);
+  blob = new Blob(0, 0, mainBlob, 255, 0, 10);
 
   for (var i = 0; i < mapSize[1] / 3; i++) {
     var x = random(-mapSize[0], mapSize[0]);
@@ -117,6 +117,11 @@ function draw() {
 
       score += 1;
       child.splice(k, 1);
+    }
+    if ((child[k + 1]) != null) {
+      if (child[k].mergeWith(child[k + 1])) {
+
+      }
     }
 
     //console.log(child[child.length-1])

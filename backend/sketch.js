@@ -40,12 +40,12 @@ function keyPressed() {
 function setup() {
   createCanvas(windowWidth, windowHeight - 10);
 
-  blob = new Blob(0, 0, mainBlob, 255, 0);
+  blob = new Blob(0, 0, mainBlob, 255, 64, 16);
 
   for (var i = 0; i < mapSize[1] / 4; i++) {
     var x = random(-mapSize[0], mapSize[0]);
     var y = random(-mapSize[1], mapSize[1]);
-    blobs[i] = new Blob(x, y, miniBlob, 0);
+    blobs[i] = new Blob(x, y, miniBlob, 0, 0, 1);
   }
 
   scale(zoom);
@@ -104,7 +104,8 @@ function draw() {
       blobs.splice(i, 1);
       var x = random(-mapSize[0], mapSize[0]);
       var y = random(-mapSize[1], mapSize[1]);
-      blobs.push(new Blob(x, y, miniBlob, 0));
+      blobs.push(new Blob(x, y, miniBlob, 1, 0, 1));
+      console.log(blobs);
     }
   }
   // DRAWING CHILDREN of BLOB
@@ -119,7 +120,7 @@ function draw() {
         blobs.splice(j, 1);
         var x2 = random(-mapSize[0], mapSize[0]);
         var y2 = random(-mapSize[1], mapSize[1]);
-        blobs.push(new Blob(x2, y2, miniBlob, 0));
+        blobs.push(new Blob(x2, y2, miniBlob, 0, 0, 1));
       }
     }
     child[k].update();

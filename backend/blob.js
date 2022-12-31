@@ -6,7 +6,9 @@ function Blob(x, y, r, c, v, m) {
   this.r = r; //SET radius of blob
   this.c = c; //SET color of blob
   this.v = v; // Velocity
-  this.mass = 16; // MASS of Blob
+  this.mass = m; // MASS of Blob
+   this.mass = max(100, m);
+
 
   this.pos = createVector(x, y); //SET position of blob
 
@@ -36,10 +38,12 @@ function Blob(x, y, r, c, v, m) {
   this.update = function () {
     //Update direction of Blob plus children
     var updateVelocity = createVector(mouseX - width / 2, mouseY - height / 2);
-    if (this.v == 4) updateVelocity.setMag(7);
-    else updateVelocity.setMag(6);
-    this.vel.lerp(updateVelocity, 0.8);
+    //console.log(this.mass, this.r)
+    updateVelocity.setMag(10* (1 / this.mass) +5);
+    //else updateVelocity.setMag(6);
+    this.vel.lerp(updateVelocity, 0.6);
     this.pos.add(this.vel);
+    console.log("Current Velocity" + this.pos + this.vel);
   };
 
   //CHECKING if user blob eats small blobs
@@ -48,6 +52,8 @@ function Blob(x, y, r, c, v, m) {
     if (d < this.r + other.r) {
       var sum = PI * this.r * this.r + PI * other.r * other.r;
       this.r = sqrt(sum / PI);
+      this.mass += other.mass;
+      console.log("Mass:" + this.mass);
       return true;
     } else {
       return false;
@@ -65,15 +71,18 @@ function Blob(x, y, r, c, v, m) {
 
   //SPLIT Blob / ATTACK
   this.half = function () {
-    var newRadius = floor(sqrt((PI * this.r * this.r) / PI) / 2);
+    var halfRadius = this.r / 1.5;
+    var newRadius = floor(sqrt((PI * halfRadius * halfRadius) / PI));
     var tempX = this.pos.x + newRadius;
     var tempY = this.pos.y + newRadius;
-    var childTemp = new Blob(tempX, tempY, newRadius, 0, 4);
+    var childTemp = new Blob(tempX, tempY, newRadius, 0, 0, 1);
 
     child.push(childTemp);
-    this.r = floor(sqrt((PI * this.r * this.r) / PI) - 1);
+    this.r = floor(sqrt((PI * halfRadius * halfRadius) / PI));
 
-    console.log(child);
+    console.log("Child:" + child);
+
+    this.mass = this.mass / 2;
     //return false;
   };
 
